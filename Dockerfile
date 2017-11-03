@@ -139,18 +139,27 @@ RUN git clone --depth 1 https://github.com/rbenv/rbenv.git /home/circleci/.rbenv
  && git clone --depth 1 https://github.com/nodenv/node-build.git /home/circleci/.nodenv/plugins/node-build \
  && git clone --depth 1 https://github.com/nodenv/nodenv-package-rehash.git /home/circleci/.nodenv/plugins/nodenv-package-rehash \
  && echo 'gem: --no-ri --no-rdoc' >> /home/circleci/.gemrc
-ENV PATH /home/circleci/.yarn/bin:/home/circleci/.rbenv/shims:/home/circleci/.rbenv/bin:/home/circleci/.nodenv/shims:/home/circleci/.nodenv/bin:$PATH
+ENV PATH /home/circleci/.yarn/bin:/home/circleci/.rbenv/shims:/home/circleci/.rbenv/bin:/home/circleci/.nodenv/shims:/home/circleci/.nodenv/bin:/home/circleci/.local/bin:$PATH
 
 # ensure that the build agent doesn't override the entrypoint
 LABEL com.circleci.preserve-entrypoint=true
 
 WORKDIR /home/circleci
+
 RUN rbenv install "${RUBY_VERSION}" \
  && rbenv global "${RUBY_VERSION}"
+
 RUN nodenv install "${NODE_VERSION}" \
  && nodenv global "${NODE_VERSION}"
+
 RUN gem update --system \
  && gem update --force \
  && curl -o- -L https://yarnpkg.com/install.sh | bash -s --
+
+RUN curl -O https://bootstrap.pypa.io/get-pip.py \
+ && python get-pip.py --user \
+ && pip install awscli awsebcli --upgrade --user \
+ && pip --version && aws --version && eb --version \
+ && rm get-pip.py
 
 CMD ["/bin/sh"]
