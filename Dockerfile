@@ -52,6 +52,7 @@ RUN sed -i'~' -e "s%http://archive.ubuntu.com/ubuntu%mirror://mirrors.ubuntu.com
     sqlite3 \
     sudo \
     tar \
+    tzdata \
     unzip \
     xvfb \
     zip \
