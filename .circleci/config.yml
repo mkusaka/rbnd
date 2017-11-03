@@ -1,0 +1,19 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: docker:stable-git
+        environment:
+          - REPO_NAME=miyucy/rbnd
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run: |
+          docker build --build-arg APT_MIRROR=US -t "${REPO_NAME}:latest" -t "${REPO_NAME}:${CIRCLE_SHA1}" .
+      - deploy:
+          command: |
+            if [ "${CIRCLE_BRANCH}" = "master" ]; then
+              docker login -u "${DOCKER_USER}" -p "${DOCKER_PASS}"
+              docker push "${REPO_NAME}:latest"
+              docker push "${REPO_NAME}:${CIRCLE_SHA1}"
+            fi
