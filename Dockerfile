@@ -6,7 +6,7 @@ FROM ubuntu:xenial
 
 ARG APT_MIRROR=JP
 ARG RUBY_VERSION=2.4.2
-ARG NODE_VERSION=8.9.0
+ARG NODE_VERSION=8.9.1
 
 ENV DEBIAN_FRONTEND noninteractive
 RUN sed -i'~' -e "s%http://archive.ubuntu.com/ubuntu%mirror://mirrors.ubuntu.com/${APT_MIRROR}.txt%g" /etc/apt/sources.list \
