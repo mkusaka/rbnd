@@ -6,10 +6,10 @@ ARG NODE_VERSION=8.9.3
 
 ENV DEBIAN_FRONTEND noninteractive
 RUN sed -i'~' -e "s%http://archive.ubuntu.com/ubuntu%mirror://mirrors.ubuntu.com/${APT_MIRROR}.txt%g" /etc/apt/sources.list \
- && echo 'Acquire::Queue-Mode "host";' > /etc/apt/apt.conf.d/75download \
- && echo 'Acquire::http::Pipeline-Depth "10";' >> /etc/apt/apt.conf.d/75download \
+ && echo 'APT::Acquire::Queue-Mode "host";' > /etc/apt/apt.conf.d/75download \
+ && echo 'APT::Acquire::http::Pipeline-Depth "10";' >> /etc/apt/apt.conf.d/75download \
+ && echo 'APT::Acquire::Retries "5";' >> /etc/apt/apt.conf.d/75download \
  && apt-get update \
- && apt-get upgrade --yes --with-new-pkgs \
  && apt-get install --yes --no-install-recommends --auto-remove \
     apt-transport-https \
     autoconf \
