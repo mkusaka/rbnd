@@ -145,14 +145,18 @@ LABEL com.circleci.preserve-entrypoint=true
 WORKDIR /home/circleci
 
 RUN rbenv install "${RUBY_VERSION}" \
- && rbenv global "${RUBY_VERSION}"
+ && rbenv global "${RUBY_VERSION}" \
+ && gem update --system \
+ && gem update --force \
+ && gem install bundler \
+ && gem --version \
+ && bundle --version
 
 RUN nodenv install "${NODE_VERSION}" \
- && nodenv global "${NODE_VERSION}"
-
-RUN gem update --system \
- && gem update --force \
+ && nodenv global "${NODE_VERSION}" \
  && curl -o- -L https://yarnpkg.com/install.sh | bash -s --
+ && npm --version \
+ && yarn --version
 
 RUN curl -O https://bootstrap.pypa.io/get-pip.py \
  && python get-pip.py --user \
