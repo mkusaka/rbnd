@@ -148,8 +148,11 @@ RUN rbenv install "${RUBY_VERSION}" \
  && rbenv global "${RUBY_VERSION}" \
  && gem update --system \
  && gem update --force \
- && gem install bundler \
+ && gem list | grep bundler || gem install bundler \
+ && rbenv rehash \
+ && which gem \
  && gem --version \
+ && which bundle \
  && bundle --version
 
 RUN nodenv install "${NODE_VERSION}" \
