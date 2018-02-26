@@ -154,7 +154,7 @@ RUN rbenv install "${RUBY_VERSION}" \
 
 RUN nodenv install "${NODE_VERSION}" \
  && nodenv global "${NODE_VERSION}" \
- && curl -o- -L https://yarnpkg.com/install.sh | bash -s --
+ && curl -o- -L https://yarnpkg.com/install.sh | bash -s -- \
  && npm --version \
  && yarn --version
 
