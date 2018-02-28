@@ -3,6 +3,7 @@ FROM ubuntu:xenial
 ARG APT_MIRROR=JP
 ARG RUBY_VERSION=2.5.0
 ARG NODE_VERSION=9.4.0
+ARG YARN_VERSION=1.5.1
 
 ENV DEBIAN_FRONTEND noninteractive
 RUN sed -i'~' -e "s%http://archive.ubuntu.com/ubuntu%mirror://mirrors.ubuntu.com/${APT_MIRROR}.txt%g" /etc/apt/sources.list \
@@ -157,7 +158,7 @@ RUN rbenv install "${RUBY_VERSION}" \
 
 RUN nodenv install "${NODE_VERSION}" \
  && nodenv global "${NODE_VERSION}" \
- && curl -o- -L https://yarnpkg.com/install.sh | bash -s -- \
+ && curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version "${YARN_VERSION}" \
  && npm --version \
  && yarn --version
 
