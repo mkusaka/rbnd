@@ -136,6 +136,7 @@ RUN git clone --depth 1 https://github.com/rbenv/rbenv.git /home/circleci/.rbenv
  && git clone --depth 1 https://github.com/rbenv/ruby-build.git /home/circleci/.rbenv/plugins/ruby-build \
  && git clone --depth 1 https://github.com/nodenv/nodenv.git /home/circleci/.nodenv \
  && git clone --depth 1 https://github.com/nodenv/node-build.git /home/circleci/.nodenv/plugins/node-build \
+ && git clone --depth 1 https://github.com/nodenv/node-build-update-defs.git /home/circleci/.nodenv/plugins/node-build-update-defs \
  && git clone --depth 1 https://github.com/nodenv/nodenv-package-rehash.git /home/circleci/.nodenv/plugins/nodenv-package-rehash \
  && echo 'gem: --no-ri --no-rdoc' >> /home/circleci/.gemrc
 ENV PATH /home/circleci/.yarn/bin:/home/circleci/.rbenv/shims:/home/circleci/.rbenv/bin:/home/circleci/.nodenv/shims:/home/circleci/.nodenv/bin:/home/circleci/.local/bin:$PATH
@@ -156,7 +157,8 @@ RUN rbenv install "${RUBY_VERSION}" \
  && which bundle \
  && bundle --version
 
-RUN nodenv install "${NODE_VERSION}" \
+RUN nodenv update-version-defs \
+ && nodenv install "${NODE_VERSION}" \
  && nodenv global "${NODE_VERSION}" \
  && curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version "${YARN_VERSION}" \
  && npm --version \
