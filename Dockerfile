@@ -2,7 +2,7 @@ FROM ubuntu:xenial
 
 ARG APT_MIRROR=JP
 ARG RUBY_VERSION=2.5.0
-ARG NODE_VERSION=9.7.0
+ARG NODE_VERSION=9.6.1
 ARG YARN_VERSION=1.5.1
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -157,7 +157,7 @@ RUN rbenv install "${RUBY_VERSION}" \
  && which bundle \
  && bundle --version
 
-RUN nodenv update-version-defs \
+RUN echo nodenv update-version-defs \
  && nodenv install "${NODE_VERSION}" \
  && nodenv global "${NODE_VERSION}" \
  && curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version "${YARN_VERSION}" \
