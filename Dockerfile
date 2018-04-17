@@ -154,7 +154,8 @@ RUN rbenv install "${RUBY_VERSION}" \
  && which gem \
  && gem --version \
  && which bundle \
- && bundle --version
+ && bundle --version \
+ && bundle config clean true
 
 RUN nodenv install "${NODE_VERSION}" \
  && nodenv global "${NODE_VERSION}" \
