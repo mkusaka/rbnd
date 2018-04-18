@@ -145,7 +145,7 @@ LABEL com.circleci.preserve-entrypoint=true
 
 WORKDIR /home/circleci
 
-RUN rbenv install "${RUBY_VERSION}" \
+RUN MAKE_OPTS=-j2 rbenv install "${RUBY_VERSION}" \
  && rbenv global "${RUBY_VERSION}" \
  && gem update --system \
  && gem update --force \
