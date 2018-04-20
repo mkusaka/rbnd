@@ -3,7 +3,7 @@ FROM ubuntu:xenial
 ARG APT_MIRROR=JP
 ARG RUBY_VERSION=2.5.1
 ARG NODE_VERSION=9.11.1
-ARG YARN_VERSION=1.5.1
+ARG YARN_VERSION=1.6.0
 
 ENV DEBIAN_FRONTEND noninteractive
 RUN sed -i'~' -e "s%http://archive.ubuntu.com/ubuntu%mirror://mirrors.ubuntu.com/${APT_MIRROR}.txt%g" /etc/apt/sources.list \
@@ -145,7 +145,7 @@ LABEL com.circleci.preserve-entrypoint=true
 
 WORKDIR /home/circleci
 
-RUN rbenv install "${RUBY_VERSION}" \
+RUN MAKE_OPTS=-j2 rbenv install "${RUBY_VERSION}" \
  && rbenv global "${RUBY_VERSION}" \
  && gem update --system \
  && gem update --force \
