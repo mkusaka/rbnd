@@ -9,11 +9,12 @@ jobs:
       - checkout
       - setup_remote_docker
       - run: |
-          docker build --build-arg APT_MIRROR=US -t "${REPO_NAME}:latest" -t "${REPO_NAME}:${CIRCLE_SHA1}" .
+          docker build --build-arg APT_MIRROR=US -t "${REPO_NAME}:latest" -t "${REPO_NAME}:$(date -u '+%Y%m%d%H%M%S')" .
       - deploy:
           command: |
             if [ "${CIRCLE_BRANCH}" = "master" ]; then
               docker login -u "${DOCKER_USER}" -p "${DOCKER_PASS}"
-              docker push "${REPO_NAME}:latest"
-              docker push "${REPO_NAME}:${CIRCLE_SHA1}"
+              for n in $(docker images | grep -F "${REPO_NAME}" | awk "{print $2}"); do
+                docker push "${REPO_NAME}:${n}"
+              done
             fi
