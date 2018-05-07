@@ -151,22 +151,11 @@ RUN MAKE_OPTS=-j2 rbenv install "${RUBY_VERSION}" \
  && gem update --force \
  && gem list | grep bundler || gem install bundler \
  && rbenv rehash \
- && which gem \
- && gem --version \
- && which bundle \
- && bundle --version \
- && bundle config clean true
-
-RUN nodenv install "${NODE_VERSION}" \
+ && bundle config clean true \
+ && nodenv install "${NODE_VERSION}" \
  && nodenv global "${NODE_VERSION}" \
  && curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version "${YARN_VERSION}" \
- && npm --version \
- && yarn --version
-
-RUN curl -O https://bootstrap.pypa.io/get-pip.py \
+ && curl -O https://bootstrap.pypa.io/get-pip.py \
  && python get-pip.py --user \
  && pip install awscli awsebcli --upgrade --user \
- && pip --version && aws --version && eb --version \
  && rm get-pip.py
-
-CMD ["/bin/sh"]
