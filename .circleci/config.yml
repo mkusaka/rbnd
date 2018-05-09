@@ -9,18 +9,15 @@ jobs:
       - checkout
       - setup_remote_docker
       - run: |
-          docker build --build-arg APT_MIRROR=US -t "${REPO_NAME}:latest" -t "${REPO_NAME}:$(date -u '+%Y%m%d%H%M%S')" .
-      - run: |
-          docker images
+          TAG_NAME=$(date -u '+%Y%m%d%H%M%S')
+          echo "${REPO_NAME}:${TAG_NAME}"
+          docker build --build-arg APT_MIRROR=US -t "${REPO_NAME}:latest" -t "${REPO_NAME}:${TAG_NAME}" .
       - deploy:
           command: |
+            docker images "${REPO_NAME}"
             if [ "${CIRCLE_BRANCH}" = "master" ]; then
               docker login -u "${DOCKER_USER}" -p "${DOCKER_PASS}"
+              for TAG_NAME in $(docker images "${REPO_NAME}" --format "{{.Tag}}"); do
+                docker push "${REPO_NAME}:${TAG_NAME}"
+              done
             fi
-            for n in $(docker images | grep -F "${REPO_NAME}" | awk '{print $2}'); do
-              if [ "${CIRCLE_BRANCH}" = "master" ]; then
-                docker push "${REPO_NAME}:${n}"
-              else
-                echo docker push "${REPO_NAME}:${n}"
-              fi
-            done
