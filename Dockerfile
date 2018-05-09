@@ -159,3 +159,5 @@ RUN MAKE_OPTS=-j2 rbenv install "${RUBY_VERSION}" \
  && python get-pip.py --user \
  && pip install awscli awsebcli --upgrade --user \
  && rm get-pip.py
+
+CMD ["/bin/sh"]
