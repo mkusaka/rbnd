@@ -167,3 +167,5 @@ RUN cd /home/circleci \
  && python get-pip.py --user \
  && pip install awscli awsebcli --upgrade --user \
  && rm get-pip.py
+
+CMD ["/bin/bash"]
