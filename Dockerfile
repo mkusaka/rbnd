@@ -50,6 +50,7 @@ RUN sed -i'~' -e "s%http://archive.ubuntu.com/ubuntu%mirror://mirrors.ubuntu.com
     postgresql-client \
     python \
     python-dev \
+    ruby \
     software-properties-common \
     sqlite3 \
     sudo \
