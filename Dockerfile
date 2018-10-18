@@ -1,7 +1,7 @@
 FROM ubuntu:bionic
 
 ARG APT_MIRROR=JP
-ARG RUBY_VERSION=2.5.1
+ARG RUBY_VERSION=2.5.2
 ARG NODE_VERSION=10.12.0
 ARG YARN_VERSION=1.10.1
 
@@ -50,6 +50,7 @@ RUN sed -i'~' -e "s%http://archive.ubuntu.com/ubuntu%mirror://mirrors.ubuntu.com
     postgresql-client \
     python \
     python-dev \
+    ruby \
     software-properties-common \
     sqlite3 \
     sudo \
