@@ -3,7 +3,7 @@ FROM ubuntu:bionic
 ARG APT_MIRROR=JP
 ARG RUBY_VERSION=2.5.3
 ARG NODE_VERSION=11.1.0
-ARG YARN_VERSION=1.12.1
+ARG YARN_VERSION=1.12.3
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN sed -i'~' -e "s%http://archive.ubuntu.com/ubuntu%mirror://mirrors.ubuntu.com/${APT_MIRROR}.txt%g" /etc/apt/sources.list \
