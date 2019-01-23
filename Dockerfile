@@ -2,8 +2,8 @@ FROM ubuntu:bionic
 
 ARG APT_MIRROR=JP
 ARG RUBY_VERSION=2.6.0
-ARG NODE_VERSION=11.5.0
-ARG YARN_VERSION=1.12.3
+ARG NODE_VERSION=11.7.0
+ARG YARN_VERSION=1.13.0
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN sed -i'~' -e "s%http://archive.ubuntu.com/ubuntu%mirror://mirrors.ubuntu.com/${APT_MIRROR}.txt%g" /etc/apt/sources.list \
@@ -157,7 +157,6 @@ RUN cd /home/circleci \
  && rbenv global "${RUBY_VERSION}" \
  && gem update --system \
  && gem update --force \
- && gem list | grep bundler || gem install bundler \
  && rbenv rehash \
  && bundle config clean true \
  && nodenv install "${NODE_VERSION}" \
