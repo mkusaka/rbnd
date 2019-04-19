@@ -1,9 +1,9 @@
 FROM ubuntu:bionic
 
 ARG APT_MIRROR=JP
-ARG RUBY_VERSION=2.5.5
-ARG NODE_VERSION=11.9.0
-ARG YARN_VERSION=1.13.0
+ARG RUBY_VERSION=2.6.3
+ARG NODE_VERSION=11.14.0
+ARG YARN_VERSION=1.15.2
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN sed -i'~' -e "s%http://archive.ubuntu.com/ubuntu%mirror://mirrors.ubuntu.com/${APT_MIRROR}.txt%g" /etc/apt/sources.list \
