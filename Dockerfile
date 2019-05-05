@@ -152,7 +152,7 @@ RUN cd /home/circleci \
  && git clone --depth 1 https://github.com/nodenv/nodenv.git /home/circleci/.nodenv \
  && git clone --depth 1 https://github.com/nodenv/node-build.git /home/circleci/.nodenv/plugins/node-build \
  && git clone --depth 1 https://github.com/nodenv/nodenv-package-rehash.git /home/circleci/.nodenv/plugins/nodenv-package-rehash \
- && echo 'gem: --no-ri --no-rdoc' >> /home/circleci/.gemrc \
+ && echo 'gem: --no-document' >> /home/circleci/.gemrc \
  && MAKE_OPTS=-j2 rbenv install "${RUBY_VERSION}" \
  && rbenv global "${RUBY_VERSION}" \
  && gem update --system \
