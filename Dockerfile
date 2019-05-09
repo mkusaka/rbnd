@@ -146,6 +146,8 @@ ENV DISPLAY=:99
 ENV LANG=C.UTF-8
 ENV PATH=/home/circleci/.yarn/bin:/home/circleci/.rbenv/shims:/home/circleci/.rbenv/bin:/home/circleci/.nodenv/shims:/home/circleci/.nodenv/bin:/home/circleci/.local/bin:$PATH
 
+COPY default.rb /home/circleci/default.rb
+
 RUN cd /home/circleci \
  && git clone --depth 1 https://github.com/rbenv/rbenv.git /home/circleci/.rbenv \
  && git clone --depth 1 https://github.com/rbenv/ruby-build.git /home/circleci/.rbenv/plugins/ruby-build \
@@ -157,6 +159,9 @@ RUN cd /home/circleci \
  && rbenv global "${RUBY_VERSION}" \
  && gem update --system \
  && gem update --force \
+ && ruby /home/circleci/default.rb | bash -ex \
+ && ruby /home/circleci/default.rb | bash -ex \
+ && rm $(gem env gemdir)/cache/*.gem /home/circleci/default.rb \
  && rbenv rehash \
  && bundle config clean true \
  && nodenv install "${NODE_VERSION}" \
