@@ -11,11 +11,11 @@ jobs:
       - setup_remote_docker:
           version: 18.09.3
       - run: |
-          docker build -t minid:latest -f Dockerfile.minid .
+          docker build --progress plain -t minid:latest -f Dockerfile.minid .
       - run: |
           TAG_NAME=$(date -u '+%Y%m%d%H%M%S')
           echo "${REPO_NAME}:${TAG_NAME}"
-          cat Dockerfile | docker run -i --rm minid:latest minid -f - | docker build --build-arg APT_MIRROR=US -t "${REPO_NAME}:latest" -t "${REPO_NAME}:${TAG_NAME}" -f - .
+          cat Dockerfile | docker run -i --rm minid:latest minid -f - | docker build --progress plain --build-arg APT_MIRROR=US -t "${REPO_NAME}:${TAG_NAME}" -f - .
       - deploy:
           command: |
             docker images "${REPO_NAME}"
