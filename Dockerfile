@@ -1,7 +1,8 @@
+# syntax = docker/dockerfile:experimental
 FROM ubuntu:bionic
 
 ARG APT_MIRROR=JP
-ARG RUBY_VERSION=2.7.0-preview3
+ARG RUBY_VERSION=2.6.5
 ARG NODE_VERSION=13.3.0
 ARG YARN_VERSION=1.21.1
 
