@@ -2,7 +2,7 @@
 FROM ubuntu:bionic
 
 ARG APT_MIRROR=JP
-ARG RUBY_VERSION=2.5.7
+ARG RUBY_VERSION=2.6.5
 ARG NODE_VERSION=13.4.0
 ARG YARN_VERSION=1.21.1
 
@@ -147,8 +147,6 @@ ENV DISPLAY=:99
 ENV LANG=C.UTF-8
 ENV PATH=/home/circleci/.yarn/bin:/home/circleci/.rbenv/shims:/home/circleci/.rbenv/bin:/home/circleci/.nodenv/shims:/home/circleci/.nodenv/bin:/home/circleci/.local/bin:$PATH
 
-COPY default.rb /home/circleci/default.rb
-
 RUN cd /home/circleci \
  && git clone --depth 1 https://github.com/rbenv/rbenv.git /home/circleci/.rbenv \
  && git clone --depth 1 https://github.com/rbenv/ruby-build.git /home/circleci/.rbenv/plugins/ruby-build \
@@ -156,13 +154,11 @@ RUN cd /home/circleci \
  && git clone --depth 1 https://github.com/nodenv/node-build.git /home/circleci/.nodenv/plugins/node-build \
  && git clone --depth 1 https://github.com/nodenv/nodenv-package-rehash.git /home/circleci/.nodenv/plugins/nodenv-package-rehash \
  && echo 'gem: --no-document' >> /home/circleci/.gemrc \
- && MAKE_OPTS=-j2 rbenv install "${RUBY_VERSION}" \
+ && MAKE_OPTS=-j2 RUBY_CONFIGURE_OPTS=--disable-install-doc rbenv install "${RUBY_VERSION}" \
  && rbenv global "${RUBY_VERSION}" \
  && gem update --system \
  && gem update --force \
- && ruby /home/circleci/default.rb | bash -ex \
- && ruby /home/circleci/default.rb | bash -ex \
- && rm $(gem env gemdir)/cache/*.gem /home/circleci/default.rb \
+ && rm $(gem env gemdir)/cache/*.gem \
  && rbenv rehash \
  && bundle config clean true \
  && nodenv install "${NODE_VERSION}" \
