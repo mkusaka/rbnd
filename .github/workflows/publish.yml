@@ -7,7 +7,7 @@ on: [push]
 #       - master
 
 jobs:
-  publish:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -17,5 +17,5 @@ jobs:
           cat Dockerfile \
             | docker run -i --rm minid:latest minid -f - \
             | docker build --build-arg APT_MIRROR=US --tag "${TAG}" -f - .
-          echo "${{ secrets.GITHUB_TOKEN }}" | docker login --username "${GITHUB_ACTOR}" docker.pkg.github.com
+          docker login -u "${GITHUB_ACTOR}" -p "${{ secrets.GITHUB_TOKEN }}" docker.pkg.github.com
           docker push "${TAG}"
