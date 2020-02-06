@@ -143,3 +143,4 @@ RUN bundle config set --global auto_config_jobs true \
  && bundle config set --global clean true \
  && bundle config set --global allow_offline_install true
 RUN sudo rm -rf /tmp/*
+CMD ["/bin/bash"]
