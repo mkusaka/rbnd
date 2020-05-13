@@ -3,8 +3,8 @@ FROM ubuntu:bionic
 
 ARG APT_MIRROR=JP
 ARG RUBY_VERSION=2.5.7
-ARG NODE_VERSION=12.16.1
-ARG YARN_VERSION=1.22.0
+ARG NODE_VERSION=12.16.3
+ARG YARN_VERSION=1.22.4
 ARG DOCKER_VERSION=5:19.03.5~3-0~ubuntu-bionic
 ARG COMPOSE_VERSION=1.25.3
 ARG DOCKERIZE_VERSION=v0.6.1
@@ -27,6 +27,7 @@ RUN apt-get install -y --no-install-recommends \
  && rm -rfv /tmp/*
 RUN apt-get install -y --no-install-recommends \
     autoconf \
+    automake \
     bison \
     build-essential \
     bzip2 \
@@ -138,6 +139,7 @@ RUN gem update --system
 RUN gem update --force
 RUN rm $(gem env gemdir)/cache/*.gem
 RUN gem --version
+RUN gem install bundler
 RUN bundler --version
 RUN bundle config set --global auto_config_jobs true \
  && bundle config set --global clean true \
