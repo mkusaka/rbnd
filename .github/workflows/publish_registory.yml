@@ -11,12 +11,11 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v2
       - name: Push to GitHub Container Registry
-        uses: docker/build-push-action@v1
-        with:
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-          registry: ghcr.io
-          repository: ${{ github.repository }}
-          tag_with_ref: true
-        env:
-          DOCKER_BUILDKIT: 1
+        run: |
+          TAG="ghcr.io/${{ github.actor }}/${{ github.repository }}:$(date -u '+%Y%m%d%H%M%S')"
+          docker build -t minid:latest -f Dockerfile.minid .
+          cat Dockerfile \
+            | docker run -i --rm minid:latest minid -f - \
+            | docker build --build-arg APT_MIRROR=US --tag "${TAG}" -f - .
+          docker login -u "${{ github.actor }}" -p "${{ secrets.CONTAINER_REGISTRY_TOKEN }}" ghcr.io
+          docker push "${TAG}"
