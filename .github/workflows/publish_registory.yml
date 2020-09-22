@@ -1,18 +1,19 @@
-name: Publish Docker image
-on:
-  push:
-    branches:
-      - test
+name: Publish to GitHub Container Registry
+
+on: [push]
+# on:
+#   push:
+#     branches:
+#       - master
+
 jobs:
-  push_to_registry:
-    name: Push Docker image to GitHub Container Registry
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out the repo
-        uses: actions/checkout@v2
-      - name: Push to GitHub Container Registry
+      - uses: actions/checkout@v2
+      - name: build & push to GitHub Container Registry
         run: |
-          TAG="ghcr.io/${{ github.actor }}/${{ github.repository }}:$(date -u '+%Y%m%d%H%M%S')"
+          TAG="ghcr.io/${{ github.repository }}:$(date -u '+%Y%m%d%H%M%S')"
           docker build -t minid:latest -f Dockerfile.minid .
           cat Dockerfile \
             | docker run -i --rm minid:latest minid -f - \
