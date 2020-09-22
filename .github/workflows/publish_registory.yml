@@ -18,5 +18,5 @@ jobs:
           cat Dockerfile \
             | docker run -i --rm minid:latest minid -f - \
             | docker build --build-arg APT_MIRROR=US --tag "${TAG}" -f - .
-          docker login -u "${{ github.actor }}" -p "${{ secrets.CONTAINER_REGISTRY_TOKEN }}" ghcr.io
+          docker login -u "${{ github.actor }}" -p "${{ secrets.GITHUB_TOKEN }}" ghcr.io
           docker push "${TAG}"
