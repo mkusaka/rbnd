@@ -21,4 +21,4 @@ jobs:
           docker login -u "${{ github.actor }}" -p "${{ secrets.CONTAINER_REGISTRY_TOKEN }}" ghcr.io
           docker push "${TAG}"
         env:
-          - DOCKER_BUILDKIT=1
+          DOCKER_BUILDKIT: 1
