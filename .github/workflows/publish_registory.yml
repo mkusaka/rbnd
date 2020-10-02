@@ -1,0 +1,23 @@
+name: Publish to GitHub Container Registry
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: build & push to GitHub Container Registry
+        run: |
+          TAG="ghcr.io/${{ github.repository }}:$(date -u '+%Y%m%d%H%M%S')"
+          docker build -t minid:latest -f Dockerfile.minid .
+          cat Dockerfile \
+            | docker run -i --rm minid:latest minid -f - \
+            | docker build --build-arg APT_MIRROR=US --tag "${TAG}" -f - .
+          docker login -u "${{ github.actor }}" -p "${{ secrets.CONTAINER_REGISTRY_TOKEN }}" ghcr.io
+          docker push "${TAG}"
+        env:
+          DOCKER_BUILDKIT: 1
