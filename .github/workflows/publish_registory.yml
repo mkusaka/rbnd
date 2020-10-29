@@ -2,8 +2,8 @@ name: Publish to GitHub Container Registry
 
 on:
   push:
-    branches:
-      - master
+    # branches:
+    #   - master
 
 jobs:
   build:
