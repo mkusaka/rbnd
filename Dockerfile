@@ -1,11 +1,11 @@
 # syntax = docker/dockerfile:experimental
-FROM ubuntu:bionic
+FROM ubuntu:focal
 
 ARG APT_MIRROR=JP
 ARG RUBY_VERSION=2.5.7
 ARG NODE_VERSION=14.15.0
 ARG YARN_VERSION=1.22.10
-ARG DOCKER_VERSION=5:19.03.13~3-0~ubuntu-bionic
+ARG DOCKER_VERSION=5:19.03.9~3-0~ubuntu-focal
 ARG COMPOSE_VERSION=1.27.4
 ARG DOCKERIZE_VERSION=v0.6.1
 
@@ -37,17 +37,17 @@ RUN apt-get install -y --no-install-recommends \
     dpkg-dev \
     fonts-noto \
     fonts-noto-cjk \
-    git-core \
+    git \
     google-chrome-stable \
     gzip \
     jq \
     libcurl4-openssl-dev \
     libffi-dev \
     libgdbm-dev \
-    libgdbm5 \
+    libgdbm6 \
     libncurses5-dev \
     libpq-dev \
-    libreadline6-dev \
+    libreadline-dev \
     libssl-dev \
     libxml2-dev \
     libxslt1-dev \
