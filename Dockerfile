@@ -116,6 +116,7 @@ ENV DISPLAY=:99 \
     PATH=/home/circleci/.yarn/bin:/home/circleci/.config/yarn/global/node_modules/.bin:/home/circleci/.nodenv/shims:/home/circleci/.nodenv/bin:/home/circleci/.rbenv/shims:/home/circleci/.rbenv/bin:/home/circleci/.local/bin:$PATH
 USER circleci
 
+RUN pip3 install --upgrade pip
 RUN pip3 install --upgrade --user awscli
 RUN aws --version
 RUN pip3 install --upgrade --user awsebcli
