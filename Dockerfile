@@ -2,7 +2,7 @@
 FROM ubuntu:bionic
 
 ARG APT_MIRROR=JP
-ARG RUBY_VERSION=2.5.8
+ARG RUBY_VERSION=2.7.2
 ARG NODE_VERSION=14.15.1
 ARG YARN_VERSION=1.22.10
 ARG DOCKER_VERSION=5:19.03.13~3-0~ubuntu-bionic
@@ -116,6 +116,7 @@ ENV DISPLAY=:99 \
     PATH=/home/circleci/.yarn/bin:/home/circleci/.config/yarn/global/node_modules/.bin:/home/circleci/.nodenv/shims:/home/circleci/.nodenv/bin:/home/circleci/.rbenv/shims:/home/circleci/.rbenv/bin:/home/circleci/.local/bin:$PATH
 USER circleci
 
+RUN pip3 install --upgrade pip
 RUN pip3 install --upgrade --user awscli
 RUN aws --version
 RUN pip3 install --upgrade --user awsebcli
