@@ -2,8 +2,9 @@
 FROM ubuntu:bionic
 
 ARG APT_MIRROR=JP
-ARG RUBY_VERSION=2.7.2
-ARG NODE_VERSION=14.16.0
+ARG RUBY_VERSION=2.7.3
+ARG NODE_VERSION=14.16.1
+ARG BUNDLER_VERSION=2.2.16
 ARG YARN_VERSION=1.22.10
 ARG DOCKER_VERSION=5:19.03.13~3-0~ubuntu-bionic
 ARG COMPOSE_VERSION=1.27.4
@@ -140,7 +141,7 @@ RUN gem update --system
 RUN gem update --force
 RUN rm $(gem env gemdir)/cache/*.gem
 RUN gem --version
-RUN gem install bundler
+RUN gem install bundler -v "${BUNDLER_VERSION}"
 RUN bundler --version
 RUN bundle config set --global auto_config_jobs true \
  && bundle config set --global clean true \
